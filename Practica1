@@ -1,0 +1,80 @@
+#### clase 1 ####
+### Introducción a R
+### varibales en R
+### operacones aritméticas
+a <- 4
+b <- 3
+a+b
+suma<- a+b
+suma
+### Operaciones de comparación 
+a > b # ¿a es mayor que b?
+a >= a  # a es mayor igual que a
+a < b  # a es menor que b
+a <= b 
+a == b # a es igual a b?
+a == 4
+a != b # a es diferente a b?
+
+## concepto de función 
+
+x <- abs (-2.5) ## abs es la función del valor absoluto
+x
+help(abs)
+# pedir ayuda en R
+help (abs)
+
+## para asignar valores a variables en R se usa una <- 
+x<- "Hola"  ## Variable tipo carácter
+z <- 6 ## el igual solo funciona en una sola dirección 
+### En este curso los objetos o variables que se utilizan 
+##son de caracter númerico y no númerico 
+ciudad <- "Toluca" # una entrada
+nombres <- c("Karla","Rodrigo","Miguel","Samuel") # se tiene que concatenar, caracter y 4 entradas 
+# poner c es concatenar
+edad <- c(28,17,49,31) # numérico y 4 entradas 
+#NA no esta declarado
+## Se utiliza class para preguntarle  a R que tipo de varibales son
+class (nombres) ### Tipo de varibale
+class(edad)
+
+base1 <- data.frame(nombres, edad) # se crea una base de datos
+# 1ra entrada Renglones,2da entrada columnas
+# para crear el data.frame se necesita tener las misma dimensiones en las variables
+View(base1) ### Ver la base de datos
+ls(base1)## ver lista de variables de base1
+
+base1$edad # para elegir solo una variable de la base de datos se usa $nombrevariable
+
+
+# Ejercicio
+#Crear una variable sexo con 4 entradas donde hombre es 1, mujer es el valor 2
+# la primera entrada es mujer y las 3 son hombres
+# despues de crear esta variable genere una nueva base
+#de nombre base2 con 3 variables, nombres, edad y sexo
+sexo <- c(2, 1, 1, 1)
+base2 <- data.frame(nombres, edad, sexo)
+table(base2$sexo) # frecuencia de las variables en una tabla 
+table(base2$edad)
+table(base2$nombres)
+
+
+## gráficar
+
+palumnos <- c(40,120,60,80) # # de alumnos en la facultad de economía
+etiq <- c("Act","Eco","ri","Neg")
+
+help(pie)
+pie(palumnos)
+pie(palumnos,etiq)
+
+pie(palumnos,etiq, main= 
+      "Gráfica de pie de la 
+     facultad de economía", sub = "Fuente: Facultad de Economía",
+    col= c("cadetblue", "chartreuse3","brown3","darkgoldenrod2"), 
+    radius = 1.1, clockwise = TRUE, lty= 23)
+# main título, sub subtitulo (pie de página)
+# col color (buscar en internet colors in R)
+# radius cambia el tamaño de la imagen
+# clockwise para que la gráfica vaya en sentido opuesto  a las manecillas del reloj
+# lty tipo de línea

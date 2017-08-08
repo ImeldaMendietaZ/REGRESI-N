@@ -1,0 +1,33 @@
+##### clase 2 ####
+## Ejercicico 
+# crear 3 variables de 4 entradas, las variables de nombre:
+#facultad (economía, ingeniería, arq y derecho)
+# licenciatura (actuaría, inge civil, arquitectura, derecho).
+# calificación alumnos ((6,4,10,8))
+# verificar con r que tipo de variables son (numerico o caracter)
+# borrar las variables facultad y licenciatura 
+#graficar con pie la variable calificacion 
+#incorporar los diversos argumentos utilizados en clase
+
+
+#Ejercicio 2
+
+facultad <- c("Economía", "Ingeniería", "Arq", "Derecho")
+licenciatura <- c("Actuaría", "Ing civil", "Arquitectura", "Derecho")
+Calificacion <- c(6,4,10,8)
+class (facultad)
+class (licenciatura)
+class(Calificacion)
+rm(facultad)
+rm(licenciatura)
+
+
+etiq<-c("Actuaría", "Ing civil", "Arquitectura", "Derecho")
+pie (Calificacion)
+pie (Calificacion,etiq)
+pie(Calificacion,etiq, main=
+      "Gráfica de las calificaciones de alumnos ", sub= "Fuente: UAEMex",
+    col=c("blue","red","pink","yellowgreen"), 
+    radius= 1.1, clockwise= TRUE, lty=6)
+
+# funcion x11()

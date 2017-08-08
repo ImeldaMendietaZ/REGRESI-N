@@ -1,0 +1,108 @@
+##### clase 2 ####
+## Ejercicico 
+# crear 3 variables de 4 entradas, las variables de nombre:
+#facultad (economía, ingeniería, arq y derecho)
+# licenciatura (actuaría, inge civil, arquitectura, derecho).
+# calificación alumnos ((6,4,10,8))
+# verificar con r que tipo de variables son (numerico o caracter)
+# borrar las variables facultad y licenciatura 
+#graficar con pie la variable calificacion 
+#incorporar los diversos argumentos utilizados en clase
+
+
+#Ejercicio 2
+
+facultad <- c("Economía", "Ingeniería", "Arq", "Derecho")
+licenciatura <- c("Actuaría", "Ing civil", "Arquitectura", "Derecho")
+Calificacion <- c(6,4,10,8)
+class (facultad)
+class (licenciatura)
+class(Calificacion)
+rm(facultad) ### rm es para borrar
+rm(licenciatura)
+
+
+etiq<-c("Actuaría", "Ing civil", "Arquitectura", "Derecho")
+pie (Calificacion)
+pie (Calificacion,etiq)
+pie(Calificacion,etiq, main=
+      "Gráfica de las calificaciones de alumnos 
+    de la UAEMex ", sub= "Fuente: UAEMex",
+    col=c("blue","red","pink","yellowgreen"), 
+    radius= 1.1, clockwise= TRUE, lty=6)
+
+# funcion x11()
+
+
+
+
+###  Vectores  ####
+a <- 2+3  # vector longitud 1
+b <- c(3,4) - c(6,1)  ## es la diferencia
+## genera un vector de 2 entradas
+b
+c <- c(4,5,6) * c(5,2,1)  # vector de 3 entradas
+c # hace la operación entrada por entrada
+d <- c(1:50, 7, 99)
+length(d)
+length(c)
+
+### Operaciones Lógicas con vectores
+ d >= 45
+ d == 50
+ d != 35
+ 
+## Sucesiones con operador y función 
+ help (seq)
+z <-  seq (0,30,3) # inicia en 0, termina en 30 y va de 3 en 3
+z
+seq(from = 0, to= 30, by=3)
+seq(by = 3, to= 30, from =0)
+seq(from = 1, to= 30, by=3) 
+seq(10) # secuencia de 1 en 1 de 1 a 10, porque no le dimos argumento
+seq(2, 10) # secuencia de 1 en 1 apartir de 2
+secuencia <- seq(1,10, by=1)
+secuencia
+secuencia1 <- seq(0,100, by=10)
+secuencia1
+sec2 <- seq( 300,130, by =3) # nos marca error porque no indicamos donde empieza y donde termina
+sec2 <- seq(to = 300,from = 130, by =3)
+sec2 <- seq( 300,130, by =-3) # si lo hace porque es de dorma descendente
+sec2
+
+### 33 muestras ####
+ingreso <- sample (20000:50000,100) # de que dato a que dato quieres tus números aleatorios
+## nos 100 números aleatorios
+ingreso
+(ingreso <- sample (20000:50000,100)) ## crea los números aleatorios y los muestra en consola
+ingreso >= 40000
+help (rnorm)
+ingreso1 <- ingreso [ingreso>40000 & ingreso < 50000]
+ingreso1
+ # tarea  guardarlos en un nuevo vector
+# reconocer los datos arriba de 40000
+# generar un vector ingreso1 que contenga los datos arriba de 40000
+  
+  
+## despliega automaticamente el valor del objeto
+  aleatorios <- sample(1:10,20, replace =TRUE)
+(aleatorios <- sample(1:10,20, replace = T))
+
+## para seleccionar la posición de un vector
+ingreso [50]
+ingreso[73]
+ingreso [30:43]
+ingreso [ingreso > 40000]
+ingreso [ingreso < 22000]
+ingreso [c(30,50,70,80)]
+ingreso [ingreso > 20000 & ingreso < 30000] #y
+ingreso [ingreso > 20000 || ingreso < 30000] #o
+
+
+### Repetir ###
+ss <- c(5, -7, 9)
+rr <- rep(ss, times=5)
+rr
+
+
+## Imelda Mendieta Zacarias

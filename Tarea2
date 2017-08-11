@@ -1,0 +1,34 @@
+###################### Ejercicio matrices########
+##### 1) crear una matriz con la función dim() de 4 columnas 
+#y 5 renglones, ##esta matriz esta basada en un vector que contiene
+estos 
+#datos 11:31 
+## el nombre de los renglones es el siguiente (toluca, 
+#pachuca, gdl, mty)
+## el nombre de las columnas es (escuela1, escuela2, escuela3, 
+#escuela4, escuela5)
+## Incorporar el nombre a los renglones y columnas de la matriz
+## identificar el dato de la escuela 3 de toluca, de la escuela 5 de gdl y la escuela 1 de pachuca
+###### 2) crear con la funciÃ³n matrix una matriz de 6 renglones
+## y 3 columnas.... y preguntar por el dato de la matriz en el 
+## renglon 3 y columna 3
+
+mat1 <- 11:30
+dim(mat1) <- c(4,5)
+
+rownames(mat1) <- c("Toluca", "Pachuca", "Guadalajara", "Monterey")
+colnames(mat1) <- c("Escuela1" , "Escuela2", "Escuela3" ,"Escuela4", "Escuela5")
+View(mat1)
+
+mat1["Toluca", "Escuela3"]
+mat1["Guadalajara", "Escuela5"]
+mat1["Pachuca", "Escuela1"]
+
+mat2 <- matrix(18:35, nrow=6,ncol=3, byrow= TRUE)
+View(mat2)
+mat2[3,3]
+
+
+
+# cambie el orden de columnas y filas y el limite de mi primer vector 
+# Imelda Mendieta Zacarias

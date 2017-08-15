@@ -1,0 +1,43 @@
+### ***** Clase 4 ***** ###
+
+#****Clase 5****
+
+# download.file ---- para descargar una base de datos 
+# unzip  --- para descomprimir
+# read.dbf  --- mandar a llamar un archivo
+# library (audio) 
+# DBF 
+
+require (foreign )
+mti2015 <- read.dbf("C:/Users/SALA-D14/Desktop/mti2015_05_17_sdem_precodificado.DBF")  # mti --- módulo de trabajo infantil 2015
+table(mti2015$SEX)  #*** para saber cuantos hombres y mujeres hay en la base de datos 
+
+require (questionr)
+### wtd.table  --- ponderar o expadir los datos con esta función 
+wtd.table(mti2015$SEX, weights = mti2015$FAC_MTI) # factor de expansión 
+ls(mti2015) # para ver la en un alista las variables de la base de datos
+sum(mti2015$FAC_MTI) #Suma todos los valores de la columna de esa variable
+
+table(mti2015$R_DEF_ENOE)
+table(mti2015$CS_P12)
+wtd.table(mti2015$CS_P12, weights = mti2015$FAC_MTI)
+
+wtd.table(mti2015$EDA, mti2015$CS_P12, weights = mti2015$FAC_MTI) 
+#para hacer tablas con dos variables solamente
+
+
+# filtrar bases subset() 
+edomex <- subset(mti2015, mti2015$ENT == 15 ) # base, varibale
+edomexmuj <- subset(mti2015, mti2015$ENT == 15 & mti2015$SEX == 2) # base, bvariable y mujeres
+agza <- subset(mti2015, mti2015$ENT == "01" | mti2015$ENT == 32 )
+ # se ponen las comillas "" porque es variable de tipo carácter 
+table(agza$ENT)
+ ## de caracter a numerica se usa la funcion as.numeric()
+as.numeric(mti2015$ENT)
+class(mti2015$ENT)
+
+
+
+#**** TaRea convertir a numerico ENT*****
+
+##*** Imelda Mendieta Zacarias

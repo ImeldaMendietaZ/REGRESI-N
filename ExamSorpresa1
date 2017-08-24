@@ -1,0 +1,74 @@
+##**** Examen Sorpresa
+#*** Imelda Mendieta Zacarias
+
+# 1.- Base de Datos 
+# ne nivel educativo
+edad <- c(15,16,18,20)
+sexo <- c(1,2,1,1)
+nombre <- c("Erick", "Rosa", "Jorge", "Gabriel")
+estatura <- c( 1.72,1.60, 1.85, 1.72  )
+ne <- c("Nivel superior", "Nivel medio superior", "Nivel medio superior", "Nivel superior")
+
+base1<- data.frame(edad,sexo,nombre,estatura,ne)
+
+View (base1)
+
+ls(base1)
+
+class(base1$edad)
+class(base1$sexo)
+class(base1$nombre)
+class(base1$estatura)
+class(base1$ne)
+
+table(edad,ne)
+table(sexo, estatura)
+
+#***1.4 En la matriz las variables son del mismo tipo y en el data.frame pueden ser de distintas
+
+#***1.5 El & se usa cuando se pretende hacer uso de los datos que hay en la intersección de dos variables, 
+# más bien dicho que ambas los contienen y el | es cuando se pretende usar los datos o valores que estan en dos 
+# variables distintas sean o no sean iguales estos valores o datos
+
+# 2.- Base de Datos INEGI
+
+require (foreign )
+
+base2 <- read.dbf("C:/Users/SALA-D14/Desktop/2015trim1_dbf/SDEMT115.dbf")
+ls(base2)
+
+#*** Nueva variable eda2
+library(plyr)
+table(base2$EDA)
+
+base2$eda2[base2$EDA== "00" | base2$EDA == "01"| base2$EDA == "02"| base2$EDA == "03"| base2$EDA == "04" |base2$EDA == "05"| base2$EDA == "06"| base2$EDA == "07"| base2$EDA == "08"| base2$EDA == "09"| base2$EDA == "10"| base2$EDA == "11"| base2$EDA == "12"| base2$EDA == "13"| base2$EDA == "14"] <-1
+ 
+base2$eda2[base2$EDA=="40" | base2$EDA == "41" |base2$EDA=="42" | base2$EDA == "43" | base2$EDA == "44" |base2$EDA=="45"| base2$EDA == "46" |base2$EDA=="47"| base2$EDA == "48" |base2$EDA=="49"| base2$EDA == "50" |base2$EDA=="51"| base2$EDA == "52" |base2$EDA=="53"| base2$EDA == "54" |base2$EDA=="55"
+           | base2$EDA == "56" |base2$EDA=="57" | base2$EDA == "58" |base2$EDA=="59" | base2$EDA == "60" |base2$EDA=="61" | base2$EDA == "62" |base2$EDA=="63" | base2$EDA == "64" |base2$EDA=="65"] <- 2
+ 
+base2$eda2[base2$EDA=="15" | base2$EDA == "16" |base2$EDA=="17" | base2$EDA == "18" | base2$EDA == "19" |base2$EDA=="20"| base2$EDA == "21" |base2$EDA=="22"| base2$EDA == "23" |base2$EDA=="24"| base2$EDA == "25" |base2$EDA=="26"| base2$EDA == "27" |base2$EDA=="28"| base2$EDA == "29" |base2$EDA=="30"
+           | base2$EDA == "31" |base2$EDA=="32" | base2$EDA == "33" |base2$EDA=="34" | base2$EDA == "35" |base2$EDA=="36" | base2$EDA == "37" |base2$EDA=="38" | base2$EDA == "39" |base2$EDA=="66" | base2$EDA == "67" |base2$EDA=="68"| base2$EDA == "69" |base2$EDA=="70"| base2$EDA == "71" |base2$EDA=="72"
+           | base2$EDA == "73" |base2$EDA=="74"| base2$EDA == "75" |base2$EDA=="76"| base2$EDA == "77" |base2$EDA=="78"| base2$EDA == "79" |base2$EDA=="80"| base2$EDA == "81" |base2$EDA=="82"| base2$EDA == "83" |base2$EDA=="84"| base2$EDA == "85" |base2$EDA=="86"| base2$EDA == "87" |base2$EDA=="88"
+           | base2$EDA == "89" |base2$EDA=="90" | base2$EDA == "91" |base2$EDA=="92" | base2$EDA == "93" |base2$EDA=="94" | base2$EDA == "95" |base2$EDA=="96" | base2$EDA == "97" |base2$EDA=="98" | base2$EDA == "99" ] <- 3
+ 
+table(base2$ENT)
+# 19 es nuevo león
+attach(base2)
+ table(SEX==2, eda2, ENT==19)
+
+ detach(base2)
+ 
+ class(base2$ENT)
+ conver <- as.numeric(base2$ENT)                  
+ class (conver) 
+ hist(conver, col = "chartreuse4" , border = "brown" , ylab = "Frecuencia", xlab = "ENtidad", 
+      main = "Histograma de la variable ENT")
+ 
+ help("attach")
+ help("table")
+ help("hist")
+
+ 
+ 
+ 
+## Continuará.....

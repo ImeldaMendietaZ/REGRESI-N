@@ -1,0 +1,11 @@
+## Gráfica de sipersión en R
+
+help("displaystyle")
+
+
+x <- c(1,2,3,4,5,6,7,8,9,10)
+y <- c(11,12,3,4,2,13,1,8,6,4)
+ 
+plot(x,y, col="chartreuse4", xlab= "nivel de vocabulario", ylab = "Edad")
+
+# **** Imelda Mendieta Zacarias

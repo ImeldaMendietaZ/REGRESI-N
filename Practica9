@@ -1,0 +1,46 @@
+#### Ejercicio en clase ## 
+#*** Se busca la relación de la estatura (x) con el salto de longitud que realizan (y)
+x <- c(170, 172, 173, 174,174, 175, 176, 177, 180, 180, 180, 180,180, 181, 181, 182, 182, 182, 182,
+       184, 184, 185, 186, 188)
+y <- c(.84, 1.31, 1.42, 1.03, 1.07, 1.08, 1.04, 1.8, 1.45, 1.60, 1.61, 2.13, 2.15, .84, 1.43, .90, 
+       1.81, 1.94, 2.68, 1.49, 2.52, 3.00,1.87, 3.08)
+#* 1) Calcule la ecuación d ela recta de regresión estimada
+#* 2) Calcule una estimación puntual del salto horizontal promedio cuando la estatura de la persona es
+# de 182
+#*3) Calcule los valores de los residuos de minimos cuadrados de las 4 observaciones con las cuales la 
+# estatura es de 182
+#¿qué proporción d ela variación observda en el salto horizontal es atribuida a la relación de regresión 
+# linela simple?
+#
+# 1)
+sxx <- sum(x^2)- ((sum(x))^2)/24
+sxy <- sum(x*y)-((sum(x)*sum(y))/24)
+
+Beta1 <- sxy/sxx
+Beta0 <- mean(y)- (Beta1*mean(x))
+
+mdo1 <- lm(y~x) # variables independientes y dependientes
+summary(mdo1)
+
+# 2)
+y1= Beta0 + Beta1*(182)   # estimador puntual
+
+# 3)
+
+valor1 <- .90- y1
+valor1
+valor2 <-1.81 -y1
+valor2
+valor3 <- 1.94-y1
+valor3 
+valor4 <- 2.68-y1
+valor4
+
+
+names(mdo1)
+mdo1$coefficients[1]
+c <- mdo1$residuals[16:19]
+c
+plot(y~x, xlab= "Estatura", ylab = "Salto Horizontal", xlim= c(160, 190),
+     ylim= c (0.80, 3.2), main = "Gráfica Diagrama de dispersión")
+abline(mdo1,col= "green")

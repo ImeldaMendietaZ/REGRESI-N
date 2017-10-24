@@ -1,0 +1,56 @@
+# ***  Ejercicio
+# Queremos comprobar la hipotésis que enetre mayor ingreso de la familia, hay una mayor estatura en los niñxs
+esta <- c(1.2, 1.23, 1.19, 1.32, 1.28, 1.22, 1.17, 1.29,1.33, 1.15) # Estatura
+eco <- c(110,130,108,167, 156, 115, 104, 138, 170, 107) # Ingreso o nivel economico
+mdo1 <- lm(esta~eco)
+# *** Bondad de ajuste ****
+#*** Con las bondad de ajuste verificamos la calidad del modelo al interpretar la variable dependiente
+anova(mdo1) # ANOVA
+# En este caso la variabilidad explicada del modelo es 0.033022 = SSM
+# *** Se revisa la SSR = 0.003138
+# *** Revisando los valores del summary, el estadístico F es mayor a 1 y p-value < 0.5
+# Con estas revisiones se puede mencionar que se rechaza la hipotesis nula de F=1 y se puede establecer un modelo
+# *** Revisar la R^2 múltiple
+# Al rededor del 91% de la variabilidad de la estatura es explicada por la recta ajustada.
+summary(mdo1)$coefficients
+
+# esta = 0.9323 + 0.0023 eco
+
+#***** Análisis de los coeficientes ******
+# B0 es 0.9323 y B1 es 0.0023, si la variable ingreso incrementa en un peso la estatura del niño incrementa 0.0023
+# ****** Diagnóstico del modelo ***
+base1 <- data.frame(eco, esta)
+base1$fitted.mdo1 <- fitted(mdo1) # Valor ajustado
+base1$residuals.mdo1 <- residuals(mdo1) # residuos del modelo 
+base1$rstudent.mdo1 <- rstudent(mdo1) # residuos estudentizados 
+
+# Estas valiables se utilizan para comprobar los supuestos
+# supuesto de normalidad.... es quelos residuos tengan una distribución normal
+
+shapiro.test(base1$rstudent.mdo1)
+# Prueba de hipotésis Shapiro Test
+# *** Ho: la muestra tiene una distribución normal
+# *** Ha: la muestra no tiene una distribución normal
+# tenemos un p-value de 0.8172, no se rechaza la hipotésis nula, por lo tanto se acepta qeu hay normalidad 
+# porque es mayor a 0.05 y menor a 1
+# ***** Ahora de verán los resultados en un gráfico ***** 
+
+x11() # abrir una ventana con la gráfica
+qqnorm(base1$rstudent.mdo1, main = "Normal (0,1)") # se obtiene grafica de los rStudent
+qqline(base1$rstudent.mdo1)
+# ****** Ahora vamos a revisar la homogeneidad de varianzas *** 
+# Para la homogeneidad de varianzas se requiere de una libreria que se llama lmtest, debido
+# a que esta se tiene que aplicar la prueba Breusch- pagan t
+install.packages("lmtest")
+require(lmtest)
+bptest(mdo1)
+
+# en esta prueba esperamos que haya homogeneidad de la varianza, para esto tenemos que 
+#tener una p-value mayor a 0.05, por lo que para mdo1 se puede decir que hay homogeneidad en la variable
+
+# ***** Prueba de autocorrelación o independencia ****
+# En este caso se utiliza la prueba de Durbin Watson....
+dwtest(mdo1, alternative = "two.sided")
+
+# en este caso al igual que los demás se acepta hipotésis nula debido a que tenemos un p-value mayor a 0.05...
+# esto quiere decir que no hay autocorrelación en los residuos....

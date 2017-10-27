@@ -1,0 +1,47 @@
+
+#******* Ejercicio ******
+#*** Plantear un mrm de mínimo 4 variables independientes, a este modelo se le va a realizar lo siguiente:
+# 1) Analizar la anova para conocer la bondad de ajuste.
+# 2) A traves de los coeficientes detectar las variables independientes no significativas.
+# 3) analizar la R^2 para conocer la variabilidad del modelo
+# 4) En dado caso de que haya alguna variable independiente no significativa eliminarla y diagnosticar el modelo a través 
+# de las pruebas para los supuestos
+
+#*** y = rendimiento academico o calificaciones
+hde <- c(2,4,5,1,6,5,3,4,2,3,4,3) # horas dedicadas a estudiar al dia
+hrs <- c(4,6,7,4,5,6,5,6,8,8,6,7)# Horas que pasa en las redes sociales 
+hdn <- c(6,8,5,4,6,6,5,7,8,4,5,6) # Horas que duerme en la noche
+al <-  c(2,1,2,3,4,3,3,2,1,4,4,3) # alimentación escala; muy buena =1,buena= 2, estándar= 3, mala=4, muy mala =5 
+Ra <-  c(8.5,9.6,9.4,6.9, 9,7.7, 8.3, 8.6,6.3,7.2,8.8,7.1) # Rendimiento academico
+
+calificaciones<- data.frame(Ra,hde,hrs, hdn, al )
+modelin <- lm(Ra ~ hde + hrs + hdn + al)
+summary(modelin)
+
+anova(modelin)
+
+#Eliminamos  hrs, hdn y al
+calificaciones<- data.frame(Ra,hde)
+modelin2 <- lm(Ra ~ hde  )
+summary(modelin2)
+
+anova(modelin2)
+
+
+# Evaluar los Supuestos
+names(modelin2)
+calificaciones$fitted.modelin2<- fitted(modelin2)
+calificaciones$residuals.modelin2 <- residuals(modelin2)
+calificaciones$rstudent.modelin2 <- rstudent(modelin2)
+
+# Supuesto de normalidad 
+shapiro.test(calificaciones$rstudent.modelin2)
+
+qqnorm(calificaciones$rstudent.modelin2)
+qqline(calificaciones$rstudent.modelin2)
+
+# Supuesto de homocedasticidad
+require(lmtest)
+bptest(modelin2)
+# SUpuesto de Durbin Wattson ( Independencia )
+dwtest(modelin2, alternative= "two.sided")

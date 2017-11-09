@@ -1,0 +1,57 @@
+
+#**** Script del 09~noviembre ~2017
+
+# swiss 
+# medición estandarizada de la fecundidad e indicadores socioeconomicos para cada una de las 46 provincias Francesas hablantes
+# de Suiza alrededor de 1888
+
+require (stats)
+base <- data.frame(swiss)
+
+# Análisis exploratorio
+names (base)
+pairs(base)
+cor(base)
+
+# Propuesta Modelo de Regresión múltiple con base en el análisis exploratorio
+regresion1 <- lm(Infant.Mortality ~ Fertility, data= base)
+
+# Modelo propuesto anteriormente, independiente al de la primera propuesta
+
+nulo <- lm(Fertility ~ 1 , data= base) # se crea para saber que las variables si tienen un poco de relación con la variable dependiente
+# el 1 es una constante solamente
+summary(nulo)
+completo <- lm(Fertility ~ . , data = base)  # lm(Fertility ~ Infant.Mortality + education + examamination +.... ) 
+# el punto hace que se tomen como independientes todas las que no sean Fertility
+
+step (nulo, scope = list(lower= nulo, upper= completo), direction= "forward") # step fn que permite calcular los AIC
+# scope incorpora todo desde el modelo nulo hasta el modelo completo ( de los más simple a lo completo)
+# 
+
+
+summary(completo)
+help(step)
+
+ # Hacer lo mismo con una base datos distinta ( escoger de las que ya tiene R)
+
+
+require (datasets); data("attitude"); ?attitude
+
+require (stats)
+base1x <- data.frame(attitude)
+
+names (base1x)
+pairs(base1x)
+cor(base1x)
+
+
+nulo1 <- lm(privileges ~ 1 , data= base1x) 
+summary(nulo1)
+completo1 <- lm(privileges ~ . , data = base1x)  
+step (nulo1, scope = list(lower= nulo1, upper= completo1), direction= "forward") 
+summary(completo1)
+
+# El mejor modelo es el de la relación de privileges con complaints + advance con un AIC = 141.77
+# porque al sumarle otro más el AIC se va a ir incrementando y ya no sería el mejor de los modelos 
+# donde tenemos una R2 ajustada de 0.2222 que nos muestra la variabilidad que existe en el modelo propuesto
+# y un P-value de 0.06169 el cual es mayor a 0.05 lo cual nos dice que no es el mejo al modelo basico 

@@ -1,0 +1,90 @@
+require (stats)
+base <- data.frame(swiss)
+
+# Análisis exploratorio
+names (base)
+pairs(base)
+cor(base)
+
+# Propuesta Modelo de Regresión múltiple con base en el análisis exploratorio
+regresion1 <- lm(Infant.Mortality ~ Fertility, data= base)
+
+# Modelo propuesto anteriormente, independiente al de la primera propuesta
+
+nulo <- lm(Fertility ~ 1 , data= base) # se crea para saber que las variables si tienen un poco de relación con la variable dependiente
+# el 1 es una constante solamente
+summary(nulo)
+completo <- lm(Fertility ~ . , data = base)  # lm(Fertility ~ Infant.Mortality + education + examamination +.... ) 
+# el punto hace que se tomen como independientes todas las que no sean Fertility
+# es el modelo más básico que sirve para poder compararlo con los otros
+
+step (nulo, scope = list(lower= nulo, upper= completo), direction= "forward") # step fn que permite calcular los AIC
+# scope incorpora todo desde el modelo nulo hasta el modelo completo ( de los más simple a lo completo)
+#
+
+# elijo el mejor modelo de acuerdo con el AIC
+mode1 <- lm(formula = Fertility ~ Education + Catholic + Infant.Mortality + Agriculture, data = base)
+
+summary(mode1) # Con la finalidad de observar aspectos básicos como la r cuadrada ajustada que nos permite conocer
+# la variabilidad explicada del modelo, los errores de residuos al standar 7.168, la significancia de las variables
+# todas son significativas
+# El estadístico F y el p-value para ver el ajuste del modelo
+# La prueba de hipotésis que se aplica en el estadístico F es H0: B0, B1, ..., Bk =0 
+# Ha: al menors un Bj diferente de 0
+# Aquí esperamos rechazar la hipotésis nula, por lo que el valor p-value debe de ser < 0.05 y además el estadístico F
+# debe de ser mayor a 1
+# al parecer tenemos un buen modelo según estos indicadores 
+
+#**** PRUEBAS FORMALES DE LOS SUPUESTOS....
+# pruebas de mrm
+shapiro.test(rstudent(mode1)) # Prueba shapiro para normalidad
+## 3 aquí esperamos no rechazar la H0 por lo que l valor de p-value debe ser mayor a 0.05, aquí observamos
+# un p-value de 0.48 por lo que podemos mencionar que no rechazamos H0, es decir, los errores se distribuyen normal
+# (El modelo no cumple el supuesto de normalidad pero apesar de eso no se rechaza)
+require(lmtest)
+bptest(mode1) #Prueba breusch pagan que permite ver autocorrelacion
+# aquí esperamos rechazar la hipotésis nula es decir un p-value mayor a 0.05, este modelo nos permite saber
+# que no hay más de dos variables que aporten lo mismo al modelo, en este caso tenemos un p-valiue de 0.5309, 
+# por lo que no rechazamos la hipotesis nula que es lo que estamos esperando o se puede decir que este modelo
+# si cumple el supuesto de autocorrelación 
+dwtest(mode1, alternative = "two.sided") # pPrueba de independencia
+# si cumple independencia, porque se acerca mucho a los intervalos a pesar de que no esta entre estos
+
+
+# lasvariables si aportan significativamente al modelo la prueba t para H0:   agri  = 0 frente a Ha: agri != 0
+# es significativa ya que 0.0187 es menor que 0.05
+
+# Interpretación de coeficientes 
+# el modelo elegido estima que hay una disminución de 0.15 en la tasa de fecundidad por cada aumento de 1
+# por ciento de hombres involucrados en la agricultura manteniendo constantes lsa variables restantes.
+# Agriculture... -0.1546... coeficiente
+# el modelo elegido estima que hay una disminución de 0.98 en la tasa de fecundidad cada aumento de 1 por ciento
+# d ela educación manteniendo constantes las variables restantes.
+# Education.... -0.9802.... Coeficiente
+# el modelo elegido estima que hay un incremento de 0.12 en la tasa de fecundidad cada aumento de 1 porciento de la
+# población católica manteniendo constantes ls variables restantes.
+# Catholic... 0.1202.... Coeficiente 
+# El modelo elegido estima que hay un incremento de 1.07 en la tasa de fecundidad cada aumento de 1 porciento
+# de mortalidad infantil mateniendo constantes las variables restantes.
+# infant.Mortality... 1.07... coeficiente
+
+basex <-data.frame(Seatbelts)
+View(Seatbelts)
+names(basex)
+pairs(basex)
+cor(basex)
+
+nulo <- lm(drivers ~ 1 , data= basex) 
+summary(nulo)
+completo <- lm(drivers ~ . , data = basex)  
+summary(completo)
+step (nulo, scope = list(lower= nulo, upper= completo), direction= "forward") 
+
+modelo <- lm(formula = drivers ~ DriversKilled + front + rear + law + VanKilled, data = basex)
+
+summary(modelo)
+
+shapiro.test(rstudent(modelo)) 
+require(lmtest)
+bptest(modelo) 
+dwtest(modelo, alternative = "two.sided") 

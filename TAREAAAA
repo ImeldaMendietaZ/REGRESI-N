@@ -1,0 +1,23 @@
+require (datasets); data("rock"); ?rock
+
+require (stats)
+base1x <- data.frame(rock)
+
+names (base1x)
+pairs(base1x)
+cor(base1x)  # ve la intencidad (entre más cercano  a 1 es mejor o más directa)
+
+
+nulo1 <- lm(area ~ 1 , data= base1x) 
+summary(nulo1)
+completo1 <- lm(area ~ . , data = base1x)  
+step (nulo1, scope = list(lower= nulo1, upper= completo1), direction= "forward") 
+summary(completo1)
+modelo <- lm(formula = area ~ peri + perm, data = base1x)
+
+summary(modelo)
+
+shapiro.test(rstudent(modelo)) 
+require(lmtest)
+bptest(modelo) 
+dwtest(modelo, alternative = "two.sided") 

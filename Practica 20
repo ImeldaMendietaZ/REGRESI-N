@@ -1,0 +1,96 @@
+ 
+ #**** Ejercicio: Ritmo Cardiaco personas con diabetes
+ 
+ peso <- c(74, 92, 63, 58, 78, 85, 85, 73, 62, 80, 72, 74)
+ altura <- c(168, 196, 170, 175, 162, 169, 190, 186, 176, 170, 176, 179) 
+ ritmo <- c(62, 75, 60, 71, 66, 62, 79, 74, 70, 66, 71, 69) # variable dependiente 
+ edad <- c(25, 31, 29, 64, 44, 41, 37, 35, 34,29, 19, 50) 
+ 
+ base <- data.frame(peso, altura, ritmo, edad)
+ pairs(base)
+ cor(base)
+ 
+ nulo <- lm( ritmo ~ 1 , data= base) 
+ 
+ completo <- lm(ritmo~ . , data = base)  
+ 
+ step (nulo, scope = list(lower= nulo, upper= completo), direction= "forward") 
+ 
+ modelo <- lm(formula = ritmo ~ altura, data = base)
+ 
+ summary(modelo)
+ 
+ shapiro.test(rstudent(modelo)) 
+ # cumple el supuesto de normalidad con un p-value de 0.9465
+ require(lmtest)
+ bptest(modelo) 
+ # cumple el supuesto de homocedasticidad porque tiene un p-value mayor a o.005  el cual es, 0.444
+ dwtest(modelo, alternative = "two.sided") 
+ # cumple el supuesto de independencia con un p-value mayor a 0.05 el cual es 0.8995
+ 
+ 
+ # Ecuación del modelo
+ # y = - 17.1479 + 0.4869 X1 
+ 
+ #*** Interceptar el modelo
+ 
+ #********** En este modelo podríamos decir  que por cada unidad de que disminuye la altura aumenta en 0.4869 el ritmo 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ # Ejercicio: BIODIVERSIDAD
+ # Fuente: INEGI BIODIVERSIDAD 2015 y BANCO MUNDIAL
+ # PE: Peligro de extinción 
+ # EA: Especies amenazadas Dependiente
+ # PT Población total 2015
+ 
+ pais <- c("Argentina" , "Bolivia", "Brasil", "Cánada", "Chile", "Colombia", "Costa Rica", "Ecuador", 
+           "El Salvador", "EUA", "Guatemala", "México", "Panáma", "Paraguay", " Perú", "República Dominicana",
+           "Trinidad y Tobago", "Uruguay" , "Venezuela")
+ PE <- c(19, 16, 73, 9, 22, 86, 30, 82, 4, 211, 37,192, 32, 4, 45, 19, 8, 8, 32)
+ EA <- c(180, 117, 451, 99, 119, 511, 194, 464, 58, 1029, 189, 749, 171, 40, 326, 111, 66, 84, 233) 
+ PT <- c(43847430, 10887882, 206101000, 36229000, 17909754, 48653419, 4909000, 16529000, 6344722, 323127513,
+         16582469, 127540423, 4034119, 6725308, 31481000, 10075000, 1367000, 3444006, 31568179)
+ 
+ base2 <- data.frame(PE, EA, PT)
+ 
+ 
+ pairs(base2)
+ cor(base2)
+ 
+ 
+ nulo <- lm( EA ~ 1 , data= base2) 
+ 
+ completo <- lm(EA ~ . , data = base2)  
+ 
+ step (nulo, scope = list(lower= nulo, upper= completo), direction= "forward") 
+ 
+ modelox <- lm(formula = EA ~ PE + PT, data = base2)
+ 
+ summary(modelox)
+ # con este modelo se obtiene una r^2 de 0.9623 el cual nos dice un 96% se puede explicar
+ # también nos dice el modelo que por cada 
+ 
+ # Pruebas o supuestos para aplicar al modelo
+ shapiro.test(rstudent(modelox)) 
+ # su p- value es menor a 0.05 por lo que este modelo no cumple normalidad
+ 
+ require(lmtest)
+ bptest(modelox) 
+ # el modelo no cumple homocedasticidad porque tiene un p-value menor a 0.05
+ 
+ dwtest(modelox, alternative = "two.sided") 
+ # El modelo cumple que es independiente
+ 
+ 
+ # Ecuación del modelo
+ # y = 64.24 + 3.76 X1 + 0.00000049 X2 
+ 
+ #*** Interceptar el modelo
+ 
+ #********** En este modelo podríamos decir  que por cada unidad de población y péligro de extincion que aumenta 
+ # aumentan las especies amenazadas

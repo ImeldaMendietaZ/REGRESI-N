@@ -1,0 +1,71 @@
+#***** Regresión logística (multinomial) ****
+install.packages("foreign")
+require(foreign)
+basedatos <- data.frame(read.spss("C:/Users/Alumno/Desktop/solorural.sav"))
+basedatos
+names(basedatos)
+length(basedatos)
+
+# Niñ@s de 5 a 17 años de zonas rurales. Modulo de trabajo infantil INEGI 2013
+
+# variable dependiente para la que trabajo (multinomial)
+# 1.- familiar
+# 2.- No familiar
+# 3.- cuenta propia 
+
+# Independiente --- 1) Sexo (1.- hombre, 2.- mujer) * 127 SEX
+#                   2) Grupo de edad (1.- de 5 a 9, 2.- de 10 a 13, 3.- de 14 a 17) ***108 EDA1
+#                   3) Jefe de hogar (1.-hombre, 2.- Mujer) * 36 SEX_JEFE
+#                   4) Tamaño de hogar (1.- 1 a 3 personas, 2.- 4 a 5, 3.- 6 a 7, 4.- 8 y más) * 32 TAM_HOG
+#                   5) Ocupación Gefe Hogar (1.- Ocupado, 2.- Desocupado) * 34 OCU_JEFE
+#                   6) Tipo de apoyo recibido (1.- Beca para estudiar, 2.- Programa gobierno, 3.- Ayuda fa,iliar, 4.- Otro tipo de ayuda, 5.- No recibe)  *112 T_APO1
+
+tippersona <- factor(basedatos$t_per) 
+sexo <-basedatos$sex
+edad <-factor(basedatos$eda1) 
+sexjefe <- basedatos$sex_jefe
+tamañoh<- basedatos$tam_hog
+ocupacionj<- basedatos$ocu_jefe
+tapoyo<-basedatos$t_apo1
+
+table(tippersona)
+table(edad)
+
+NBase <- data.frame(tippersona, sexo, edad, sexjefe, tamañoh,ocupacionj, tapoyo)
+
+sapply(NBase, class)
+basenueva <- na.omit(NBase)
+basenueva
+
+#glm(y ~ x, family = binomial, data = mis.datos)
+#args(glm)
+
+library(ggplot2)
+help("ggplot")
+
+ggplot(basenueva, aes(x = edad, y = tapoyo, color= tippersona)) + geom_point()
+
+
+modelo.logit <- glm(tippersona ~ sexo + edad + sexjefe + tamañoh + ocupacionj + tapoyo,
+                    data = basenueva, family = "binomial")
+summary(modelo.logit)
+
+help("family")
+help("glm")
+
+
+
+# ***** INTERPRETACIÓN ***** 
+
+# la variable dependiente en este modelo es tippersona que hace referencia al tipo de persona, la cual tiene 4 categorias
+# "1.-Es un familiar, 2.-No es un familiar, 3.-Trabaja solo o por su cuenta, 4.-No sabe"
+# el modelo se realizó de forma  binomial lo cual nos indica que de estas 4 variables que foman a la variable dependiente la
+# la primera seria nuestro 1 y las 3 restantes serian nuestro 2, que seria familiar y no familiar
+# se creó el modelo con una relación con el sexo, la edad, el sexo del jefe de hogar, el tamaño de hogar, la ocupación del jefe de hogar y con el apoyo que se recibe para poder seguir estudiando
+# dentro del modelo se observa que las variables con las que más se relaciona  o bien las categorias que dan mejores resultados son: el sexo en cuanto a mmujeres con un p- value d demasiado cercano a 0
+# sexojefemujer, edad2, edad3 (referenciado con los grupos de edad 2 y 3), con un p-value cercano a 0, la variable ocupaciónjdesocupado tambien fue de gran importancia mostrando un p-value de 0.0000000000129
+# las categorias de tapoyootro, tapoyogobierno y taopoyono ha recibido ayuda son particpes de gran relevancia pues muestran un p value de 0.0012 y 0.000358 respectivamente
+# el AIC del modelo es de 5593.3
+# con los resultados del modelo podemos decir que el tipo de persona se relaciona más con el sexo mujeres, los grupos de edad de 10 a 13 años y de 14 a 17 años, 
+# con los jefes del hogar cuando son mujeres y con la ocupacion que tiene el jefe del hogar en este caso desocupado, y que a lo mismo tiene gran relación 
+# el tipo de ayuda que recibe especialmente con si no ha recibido ayuda y si recibe ayuda del gobierno 
